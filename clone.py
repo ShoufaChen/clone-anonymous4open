@@ -4,6 +4,9 @@ from bs4 import BeautifulSoup
 import os
 import argparse
 
+# pattern that is contained in the page when a file is too big
+too_big_pattern = re.compile('too big to be anonymized')
+
 def parse_args():
     parser = argparse.ArgumentParser(description='Clone from the https://anonymous.4open.science')
     parser.add_argument('--clone-dir', type=str, default='master',
@@ -56,6 +59,12 @@ def clone_file(url, download, root_url='https://anonymous.4open.science'):
             continue
 
         blob_soup = pull_html(root_url+href)
+
+		# skipping files that are too big
+        if len(blob_soup.body.findAll(text=too_big_pattern)) != 0:
+            print(f'WARNING: Skipping {file_name} as it is too big to be anonymized')
+            continue
+
         source_code = blob_soup.find('code')
         with open(file_name, 'w') as f:
             f.write(source_code.get_text())
