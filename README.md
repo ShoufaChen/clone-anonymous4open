@@ -23,6 +23,7 @@ python clone.py --clone-dir ../examples --target https://anonymous.4open.science
 
 
 ## TODO
+- [ ] support files that do not have `<code>` element.
 - [ ] support *.md files
 
 ## Acknowledgement

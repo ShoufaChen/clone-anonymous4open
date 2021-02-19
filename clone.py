@@ -57,6 +57,9 @@ def clone_file(url, download, root_url='https://anonymous.4open.science'):
 
         blob_soup = pull_html(root_url+href)
         source_code = blob_soup.find('code')
+        if not source_code:
+            print('Skip file {}'.format(file_name))
+            continue
         with open(file_name, 'w') as f:
             f.write(source_code.get_text())
 
