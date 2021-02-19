@@ -55,7 +55,7 @@ def clone_file(url, download, root_url='https://anonymous.4open.science'):
         if split_href[-1].split('.')[-1] == 'md' or split_href[-1] =='LICENSE':
             continue
 
-        blob_soup = pull_html(root_url+href)
+        blob_soup = pull_html(root_url+urllib2.pathname2url(href))
         source_code = blob_soup.find('code')
         if not source_code:
             print('Skip file {}'.format(file_name))
